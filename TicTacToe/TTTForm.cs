@@ -359,13 +359,14 @@ namespace TicTacToe
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void newGameButton_Click(object sender, EventArgs e)
         {
             ResetSquares();
             EnableAllSquares();
+            resultLabel.Text = "";
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
