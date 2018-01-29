@@ -33,6 +33,15 @@ namespace TicTacToe
         const int COLUMN = 2;
         const int DIAGONAL = 3;
 
+        string[,] board = new string[SIZE, SIZE];
+
+        public void FillBoard()
+        {
+            for (int row = 0; row < SIZE; row++)
+                for (int col = 0; col < SIZE; col++)
+                    board[row, col] = EMPTY;
+        }
+
         // This method takes a row and column as parameters and 
         // returns a reference to a label on the form in that position
         private Label GetSquare(int row, int column)
@@ -54,25 +63,19 @@ namespace TicTacToe
         // This method takes a row (in the range of 0 - 4) and returns true if 
         // the row on the form contains 5 Xs or 5 Os.
         // Use it as a model for writing IsColumnWinner
+        // CHANGE
         private bool IsRowWinner(int row)
         {
-            Label square = GetSquare(row, 0);
-            string symbol = square.Text;
+            string symbol = board[row, 0];
             for (int col = 1; col < SIZE; col++)
             {
-                square = GetSquare(row, col);
-                if (symbol == EMPTY || square.Text != symbol)
+                if (symbol == EMPTY || board[row, col] != symbol)
                     return false;
             }
             return true;
         }
 
-        //* TODO:  finish all of these that return true
-        private bool IsAnyRowWinner()
-        {
-            return true;
-        }
-
+        // CHANGE
         private bool IsColumnWinner(int col)
         {
             Label square = GetSquare(0, col);
@@ -83,11 +86,6 @@ namespace TicTacToe
                 if (symbol == EMPTY || square.Text != symbol)
                     return false;
             }
-            return true;
-        }
-
-        private bool IsAnyColumnWinner()
-        {
             return true;
         }
 
