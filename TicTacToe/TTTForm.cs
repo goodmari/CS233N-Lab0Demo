@@ -321,15 +321,34 @@ namespace TicTacToe
             }
         }
 
+        public void SyncArrayAndUI()
+        {
+            for (int row = 0; row < board.GetLength(0); row++)
+            {
+                for (int col = 0; col < board.GetLength(1);  col++)
+                {
+                    GetSquare(row, col).Text = board[row, col];
+                    GetSquare(row, col).ForeColor = Color.Black;
+                    if (GetSquare(row, col).Text != EMPTY)
+                        DisableSquare(GetSquare(row, col));              }
+            }
+        }
+
         //* TODO:  finish this
         private void label_Click(object sender, EventArgs e)
         {
             int winningDimension = NONE;
             int winningValue = NONE;
+            int row, col;
 
             Label clickedLabel = (Label)sender;
-            clickedLabel.Text = USER_SYMBOL;
-            DisableSquare(clickedLabel);
+            //clickedLabel.Text = USER_SYMBOL;
+            //DisableSquare(clickedLabel);
+
+            // put the x in the array
+            GetRowAndColumn(clickedLabel, out row, out col);
+            board[row, col] = USER_SYMBOL;
+            SyncArrayAndUI();
 
             if (IsWinner(out winningDimension, out winningValue))
             {
@@ -344,6 +363,7 @@ namespace TicTacToe
             else
             {
                 MakeComputerMove();
+                SyncArrayAndUI();
                 if (IsWinner(out winningDimension, out winningValue))
                 {
                     HighlightWinner("The Computer", winningDimension, winningValue);
@@ -359,14 +379,21 @@ namespace TicTacToe
 
         private void newGameButton_Click(object sender, EventArgs e)
         {
-            ResetSquares();
             EnableAllSquares();
+            FillBoard();
+            SyncArrayAndUI();
             resultLabel.Text = "";
         }
 
         private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void TTTForm_Load(object sender, EventArgs e)
+        {
+            FillBoard();
+            SyncArrayAndUI();
         }
     }
 }
